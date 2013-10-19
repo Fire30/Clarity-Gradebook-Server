@@ -85,15 +85,17 @@ class LoginManager(object):
 					#parse html to get title and grade numbers
 					class_title = class_data.find('th',{'class' : 'classTitle'}).text
 					class_dict['class_name'] = class_title
+					enroll_id = ""
 					for letter_grade_data in class_data.findAll('td',{'class' : 'gradeNumeric'}):
 						grade_list.append(letter_grade_data.text)
 						try:
 							info_url = letter_grade_data.find('a',href=True)['href']
 							parsed = urlparse.urlparse(info_url)
 							enroll_id = urlparse.parse_qs(parsed.query)['EnrollmentId']
+							term_id = urlparse.parse_qs(parsed.query)['TermId']
 							term_list.append(urlparse.parse_qs(parsed.query)['TermId'])
 						except:
-							pass
+							term_list.append(["0"])
 					#set values in class_dict
 					class_dict['grade_values'] = grade_list
 					class_dict['enroll_id'] = enroll_id
@@ -101,24 +103,20 @@ class LoginManager(object):
 					#add class data into a list with rest of classes
 					all_class_list.append(class_dict)
 					class_index += 1
+			#Now we need to grab the periods. 
+			#I believe the one with the most data will be on the bottom
+			#If not screw clarity
+			#tis to confusing
+			period_list = []
+			for quarter_name in chart_data.findAll('th',{'colspan' : '3'}):
+				#This is the first entry for some reason
+				#Screws up my parsing lol
+				if quarter_name.text != 'Course Grade-Sec':
+					period_list.append(quarter_name.text)
 		#append the data for the class into the final dict
 		self.final_list.append({'classes':all_class_list})
-		#We now have to get things not related to one class...aka the quarter,names of periods,etc
-		period_list = []
-		date_list = []
-		#gets names of periods and the dates that they are active
-		for terms in json_grade_data[class_index]['terms']:
-			period_list.append(terms['description'])
-			date_list.append((terms['start'],terms['end']))
-		#gets what period we are in using the dates it gives us
+		#I could have a way of determing the period, but I am just going to set it lol...
 		quarter_index = 0
-		for date_tuple in date_list:
-			start = datetime.datetime.strptime(date_tuple[0], "%m/%d/%Y").date()
-			end = datetime.datetime.strptime(date_tuple[1], "%m/%d/%Y").date()
-			if  start <= datetime.date.today() <= end:
-				break
-			else:
-				quarter_index += 1
 		#appends other things we need for displaying grades
 		self.final_list.append({'periods':period_list})
 		self.final_list.append({'quarter_index':quarter_index})
