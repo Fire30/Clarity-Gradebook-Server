@@ -5,18 +5,22 @@ This is a simple python implentation that is able to parse the html from loudoun
 
 Prerequisites
 =============
-Python 2.7.x
-Django 1.5.1
-Beautiful Soup
+-Python 2.7.x
+
+-Django 1.5.1
+
+-Requests 2.x
+
+-Beautiful Soup
 
 Usage
 ==============
 To acess the JSON for every class and their total grades the formed url would be:
-www.site.com/clarity/logon/?user=foo&pass=bar&school=9001
+www.site.com/clarity/login?username=xxxpassword=xxx
 
 to acess JSON for individual grades for a certain class the url would be:
-http://site.com/clarity/grades/?aspxauth=foo&url=bar
-Obviously subsituting the aspxauth returned in the first url with foo and one of the urls returned in the first url with bar.
+http://site.com/clarity/grade?enroll_id=xxx&term_id=xxx&student_id=xxx&aspx=xxx
+Obviously subsituting the the xxx's for their respective parameters
 
 LICENSE
 ==============
