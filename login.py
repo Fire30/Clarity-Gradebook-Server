@@ -113,11 +113,23 @@ class LoginManager(object):
 				#Screws up my parsing lol
 				if quarter_name.text != 'Course Grade-Sec':
 					period_list.append(quarter_name.text)
-		#append the data for the class into the final dict
-		self.final_list.append({'classes':all_class_list})
+		#I don't get all the names though if it is highschool..
+		#I have to hardcode what they are
+		#Pretty annoying
+		if len(period_list) ==  9:
+		    period_list[3] = 'First Semester Final Grade'
+		    period_list[7] = 'Second Semester Final Grade'
+		    period_list[8] = 'Final Grade'
+		    for _class in all_class_list:
+		        if len(_class['grade_values']) == 5:
+		            _class['grade_values'].insert(2,"")
+		            _class['grade_values'].insert(3,"")
+		            _class['grade_values'].insert(6,"")
+		            _class['grade_values'].insert(7,"")
 		#I could have a way of determing the period, but I am just going to set it lol...
 		quarter_index = 0
 		#appends other things we need for displaying grades
+		self.final_list.append({'classes':all_class_list})
 		self.final_list.append({'periods':period_list})
 		self.final_list.append({'quarter_index':quarter_index})
 		self.final_list.append({'credentials':[self.ASPXAUTH,self.studentId]})
