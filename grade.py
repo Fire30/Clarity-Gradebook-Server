@@ -29,7 +29,7 @@ class GradeManager(object):
 		for grade in grade_table:
 			grade_title = grade.find('td').text
 			grade_text =  grade.findAll('td',{'class' : 'grade'})
-			grade_score = '%s/%s(%s)' % (grade_text[0].text,grade_text[1].text,grade_text[2].text)
+			grade_score = '%s/%s(%s)' % (grade_text[0].text,grade_text[1].text.split('.')[0],grade_text[2].text)
 			grade_list.append([{'assignment_name':grade_title},{'score':grade_score}])
 
 		
