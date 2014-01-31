@@ -75,6 +75,7 @@ class LoginManager(object):
 		#might be multiple boxes so we get all tbodys just in case there is multiple
 		grade_data = soup.findAll('table',{'class' : 'reportTable'})
 		all_class_list = []
+		period_list = []
 		for chart_data in grade_data:
 			class_index = 0
 			for each_class in chart_data.findAll('tbody'):
@@ -86,7 +87,7 @@ class LoginManager(object):
 					class_title = class_data.find('th',{'class' : 'classTitle'}).text
 					class_dict['class_name'] = class_title
 					enroll_id = ""
-					for letter_grade_data in class_data.findAll('td',{'class' : 'gradeNumeric'}):
+					for letter_grade_data in class_data.findAll('td',{'colspan' : '3'}):
 						grade_list.append(letter_grade_data.text)
 						try:
 							info_url = letter_grade_data.find('a',href=True)['href']
