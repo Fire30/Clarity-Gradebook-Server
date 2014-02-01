@@ -128,7 +128,7 @@ class LoginManager(object):
 		            _class['grade_values'].insert(6,"")
 		            _class['grade_values'].insert(7,"")
 		#I could have a way of determing the period, but I am just going to set it lol...
-		quarter_index = 1
+		quarter_index = 3
 		#appends other things we need for displaying grades
 		self.final_list.append({'classes':all_class_list})
 		self.final_list.append({'periods':period_list})
