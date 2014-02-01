@@ -86,7 +86,7 @@ class LoginManager(object):
 					#parse html to get title and grade numbers
 					class_title = class_data.find('th',{'class' : 'classTitle'}).text
 					class_dict['class_name'] = class_title
-					enroll_id = ""
+					enroll_id = [""]
 					for letter_grade_data in class_data.findAll('td',{'colspan' : '3'}):
 						grade_list.append(letter_grade_data.text)
 						try:
