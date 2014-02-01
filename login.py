@@ -131,7 +131,7 @@ class LoginManager(object):
 		if len(period_list) > 6:
 			quarter_index = 3
 		else:
-			quarter_index = 2
+			quarter_index = 5
 		#appends other things we need for displaying grades
 		self.final_list.append({'classes':all_class_list})
 		self.final_list.append({'periods':period_list})
